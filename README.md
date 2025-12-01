@@ -1,9 +1,8 @@
  # EXPERIMENT--06-INTERFACING-DIGITAL-SENSOR-ON-RASPBERRY-PI-DEVELOPMENT-BOARD-
-### NAME
-### ROLL NO:
-### DEPARTMENT 
-### DATE
-
+### NAME : Vishal S
+### ROLL NO : 212223110063
+### DEPARTMENT : CSE(IoT)
+### DATE : 
 ### AIM
 interface the DHT11 digital temperature and humidity sensor with a Raspberry Pi development board and display real-time data.
 
@@ -78,39 +77,36 @@ open thonny python and writhe the python script as shown below
 
 
 ### PYTHON SCRIPT 
- 
-`
-
-
+```
+import Adafruit_DHT
 import time
-import board
-import adafruit_dht
-import psutil
-//// first check if a libgpiod process is running. 
-for proc in psutil.process_iter():
-    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
-        proc.kill()
-sensor = adafruit_dht.DHT11(board.D23)
-while True:
-    try:
-        temp = sensor.temperature
-        humidity = sensor.humidity
-        print("Temperature: {}*C   Humidity: {}% ".format(temp, humidity))
-    except RuntimeError as error:
-        print(error.args[0])
-        time.sleep(2.0)
-        continue
-    except Exception as error:
-        sensor.exit()
-        raise error
-    time.sleep(2.0)`
 
+# Define sensor type and GPIO pin
+sensor = Adafruit_DHT.DHT11
+gpio_pin = 23
+
+while True:
+    # Read data from the sensor
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, gpio_pin)
+
+    # Check if reading was successful
+    if humidity is not None and temperature is not None:
+        print(f"Temp = {temperature:.1f}°C  |  Humidity = {humidity:.1f}%")
+    else:
+        print("Failed to read from DHT11 sensor. Trying again...")
+
+    time.sleep(2)
+```
 
 
 
 
 
 ## SCREENSHOT OF THE OUPT AND CIRCUIT 
+
+<img width="501" height="425" alt="image" src="https://github.com/user-attachments/assets/4eba07fc-62a8-4967-8bbf-9264379671c2" />
+
+![Untitled](https://github.com/user-attachments/assets/a84a34df-b7f8-4a90-b160-8ccf1f1e915f)
 
 
 
